@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name="USER_VERIFICATION")
-public class UserVerification {
+public class VendorVerification {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class UserVerification {
 	
 	@OneToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name = "USER_ID")
-	private User user;
+	private Vendor user;
 	
 	@Column(name = "VERIFICATION_CODE_CREATED_DATE")
 	private Timestamp verificationCodeCreatedDate;
@@ -28,11 +28,11 @@ public class UserVerification {
 	@Column(name = "RESET_PASSWORD_CREATED_DATE")
 	private Timestamp resetPasswordCreatedDate;
 	
-	public User getUser() {
+	public Vendor getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Vendor user) {
 		this.user = user;
 	}
 

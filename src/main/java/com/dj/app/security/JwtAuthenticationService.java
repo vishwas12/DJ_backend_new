@@ -1,6 +1,6 @@
 package com.dj.app.security;
 
-import com.dj.app.domain.User;
+import com.dj.app.domain.Vendor;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -26,7 +26,7 @@ public class JwtAuthenticationService {
 										  HttpServletResponse httpServletResponse,
 										  UsernamePasswordAuthenticationToken authentication) {
 		String userId = (String) authentication.getPrincipal();
-		User response = (User) authentication.getDetails();
+		Vendor response = (Vendor) authentication.getDetails();
 
 		Map<String, Object> claims = new HashMap<>();
 		/*claims.put("roles", response.getRolesList());*/

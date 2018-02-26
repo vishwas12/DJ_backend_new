@@ -1,7 +1,7 @@
 package com.dj.app.service;
 
 import com.dj.app.domain.Role;
-import com.dj.app.domain.User;
+import com.dj.app.domain.Vendor;
 import com.dj.app.dto.LoginDto;
 import com.dj.app.dto.UserDto;
 import com.dj.app.repository.RoleRepository;
@@ -30,8 +30,8 @@ public class UserService {
 	@Autowired
 	RoleRepository roleRepository;
 
-	public User authenticate(LoginDto loginDto) {
-		User user = null;
+	public Vendor authenticate(LoginDto loginDto) {
+		Vendor user = null;
 		try {
 			if(CommonUtils.matchEmail(loginDto.getPrincipal())) {
 				user = userRepository.findByEmailAndPassword(loginDto.getPrincipal(),loginDto.getPassword());
@@ -45,7 +45,7 @@ public class UserService {
 		return user;
 	}
 
-	public void registerUser(User user) {
+	public void registerUser(Vendor user) {
 		try {
 			user.setPassword(CommonUtils.encodeToMD5(user.getPassword()));
 			Role role = roleRepository.findByRole(DjConstants.ROLE_USER);
@@ -60,7 +60,7 @@ public class UserService {
 	}
 
 	public UserDto getUserDetails(String id) {
-		User user = null;
+		Vendor user = null;
 		UserDto userDto = new UserDto();
 		try {
 			 user = userRepository.findByUserId(id);

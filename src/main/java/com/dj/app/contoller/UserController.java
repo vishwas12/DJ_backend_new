@@ -1,6 +1,6 @@
 package com.dj.app.contoller;
 
-import com.dj.app.domain.User;
+import com.dj.app.domain.Vendor;
 import com.dj.app.dto.UserDto;
 import com.dj.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class UserController {
 
 	@RequestMapping(value = "/login",method = RequestMethod.POST)
 	public ResponseEntity login(HttpServletRequest request, Authentication auth) {
-		User user = (User) auth.getDetails();
+		Vendor user = (Vendor) auth.getDetails();
 		user.setPassword(null);
 		user.setAccessToken((String)request.getAttribute("token"));
 		return ResponseEntity.ok(auth.getDetails());

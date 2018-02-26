@@ -1,15 +1,28 @@
 package com.dj.app.domain;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
-public class User {
+public class Vendor {
 
 	@Id
 	@GeneratedValue(generator="UUID")
@@ -46,7 +59,10 @@ public class User {
 	private List<Role> roles = new ArrayList<>();
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-	private UserVerification userVerification;
+	private VendorVerification userVerification;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vendor")
+	private Set<Profile> profile;
 
 	public String getUserId() {
 		return userId;
@@ -168,11 +184,11 @@ public class User {
 		this.roles = roles;
 	}
 
-	public UserVerification getUserVerification() {
+	public VendorVerification getUserVerification() {
 		return userVerification;
 	}
 
-	public void setUserVerification(UserVerification userVerification) {
+	public void setUserVerification(VendorVerification userVerification) {
 		this.userVerification = userVerification;
 	}
 }

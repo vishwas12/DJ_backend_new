@@ -1,7 +1,7 @@
 package com.dj.app.contoller;
 
 
-import com.dj.app.domain.User;
+import com.dj.app.domain.Vendor;
 import com.dj.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class PublicController {
 	UserService userService;
 
 	@RequestMapping(value = "/register",method = RequestMethod.POST)
-	public ResponseEntity register(@RequestBody User user) {
+	public ResponseEntity register(@RequestBody Vendor user) {
 		userService.registerUser(user);
 
 		return ResponseEntity.ok("");

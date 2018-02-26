@@ -1,14 +1,14 @@
 package com.dj.app.repository;
 
-import com.dj.app.domain.User;
+import com.dj.app.domain.Vendor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, String>{
+public interface UserRepository extends JpaRepository<Vendor, String>{
 
-	User findByPhoneAndPassword(String phone, String password);
-	User findByEmailAndPassword(String email,String password);
+	Vendor findByPhoneAndPassword(String phone, String password);
+	Vendor findByEmailAndPassword(String email,String password);
 	Long countByEmail(String email);
 	Long countByPhone(String phone);
-	User findByUserId(String id);
+	Vendor findByUserId(String id);
 
 }

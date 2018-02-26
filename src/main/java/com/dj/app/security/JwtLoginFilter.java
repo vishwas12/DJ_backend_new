@@ -1,6 +1,6 @@
 package com.dj.app.security;
 
-import com.dj.app.domain.User;
+import com.dj.app.domain.Vendor;
 import com.dj.app.dto.LoginDto;
 import com.dj.app.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,7 +45,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter{
 
 		String principal = params.get("principal");
 		String password = params.get("password");
-		User user = null;
+		Vendor user = null;
 		try {
 			//TODO Authenticate user
 			user = userService.authenticate(new LoginDto(principal,password));
