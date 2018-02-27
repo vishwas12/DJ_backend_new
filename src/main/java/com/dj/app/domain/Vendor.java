@@ -27,8 +27,8 @@ public class Vendor {
 	@Id
 	@GeneratedValue(generator="UUID")
 	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-	@Column(name = "user_id")
-	private String userId;
+	@Column(name = "vendor_id")
+	private String vendorId;
 
 	private String firstName;
 	private String lastName;
@@ -38,6 +38,7 @@ public class Vendor {
 	@Column(unique = true)
 	private String email;
 	private String password;
+	@Column(unique = true)
 	private String phone;
 	private Integer status;
 	private Date createdOn;
@@ -52,11 +53,11 @@ public class Vendor {
 	@Column(name = "IS_EMAIL_VERIFIED")
 	private Boolean isEmailVerified;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+/*	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLES", joinColumns = {
-			@JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "VENDOR_ID", referencedColumnName = "VENDOR_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID") })
-	private List<Role> roles = new ArrayList<>();
+	private List<Role> roles = new ArrayList<>();*/
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private VendorVerification userVerification;
@@ -64,12 +65,20 @@ public class Vendor {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vendor")
 	private Set<Profile> profile;
 
-	public String getUserId() {
-		return userId;
+	public String getVendorId() {
+		return vendorId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setVendorId(String vendorId) {
+		this.vendorId = vendorId;
+	}
+
+	public Set<Profile> getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Set<Profile> profile) {
+		this.profile = profile;
 	}
 
 	public String getFirstName() {
@@ -176,13 +185,13 @@ public class Vendor {
 		isEmailVerified = emailVerified;
 	}
 
-	public List<Role> getRoles() {
+/*	public List<Role> getRoles() {
 		return roles;
 	}
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
-	}
+	}*/
 
 	public VendorVerification getUserVerification() {
 		return userVerification;

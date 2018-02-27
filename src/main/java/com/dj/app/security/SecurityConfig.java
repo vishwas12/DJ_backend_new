@@ -1,6 +1,6 @@
 package com.dj.app.security;
 
-import com.dj.app.service.UserService;
+import com.dj.app.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	UserService userService;
+	VendorService userService;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

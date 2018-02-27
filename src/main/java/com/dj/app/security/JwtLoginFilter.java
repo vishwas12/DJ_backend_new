@@ -2,7 +2,7 @@ package com.dj.app.security;
 
 import com.dj.app.domain.Vendor;
 import com.dj.app.dto.LoginDto;
-import com.dj.app.service.UserService;
+import com.dj.app.service.VendorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,11 +26,11 @@ import java.util.Set;
 
 public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter{
 
-	private UserService userService;
+	private VendorService userService;
 
 	private AuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
 
-	public JwtLoginFilter(String url, UserService userService,AuthenticationManager authManager) {
+	public JwtLoginFilter(String url, VendorService userService, AuthenticationManager authManager) {
 		super(new AntPathRequestMatcher(url));
 		this.userService = userService;
 		setAuthenticationManager(authManager);
@@ -61,7 +61,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter{
 		Set<GrantedAuthority> grantedAuthorities = null;
 
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-				user.getUserId(),
+				user.getVendorId(),
 				null, grantedAuthorities);
 		authenticationToken.setDetails(user);
 		return authenticationToken;
