@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,8 +16,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+
+import org.hibernate.annotations.DynamicUpdate;
+
+import com.dj.app.utils.EnumUtils;
 
 @Entity
+@DynamicUpdate
 public class Profile {
 	
 	@Id
@@ -44,9 +53,20 @@ public class Profile {
 	
 	private Date updatedOn;
 	
-	private String status; //need to be replaced with enum
+	@Enumerated(EnumType.STRING)
+	private EnumUtils.Status status; //need to be replaced with enum
 	
 	public Profile() {
 		this.subProfile = new HashSet<>();
+	}
+	
+	@PrePersist
+	public void prePersist(){
+		this.createdOn = new Date();
+	}
+	
+	@PreUpdate
+	public void preUpdate(){
+		this.updatedOn = new Date();
 	}
 }
