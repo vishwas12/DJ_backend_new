@@ -1,14 +1,6 @@
 package com.dj.app.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import com.dj.app.utils.EnumUtils;
 
@@ -17,7 +9,8 @@ public class SubCategory {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer subCategory;
+	@Column(name = "sub_category_id")
+	private Integer subCategoryId;
 	
 	private String subCategoryName;
 		
@@ -30,12 +23,18 @@ public class SubCategory {
 	@JoinColumn(name = "category_id")
 	private Category category;
 
-	public Integer getSubCategory() {
-		return subCategory;
+	public Integer getSubCategoryId() {
+		return subCategoryId;
 	}
 
-	public void setSubCategory(Integer subCategory) {
-		this.subCategory = subCategory;
+	public void setSubCategoryId(Integer subCategoryId) {
+		this.subCategoryId = subCategoryId;
+	}
+
+	public SubCategory() {
+	}
+	public SubCategory(Integer subCategoryId) {
+		this.subCategoryId = subCategoryId;
 	}
 
 	public String getSubCategoryName() {

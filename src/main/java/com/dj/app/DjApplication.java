@@ -34,7 +34,7 @@ import java.util.Locale;
 				"com.dj.app"
 		}
 )
-@EnableWebMvc
+/*@EnableWebMvc*/
 @EnableJpaRepositories({
 		"com.dj.app.repository"
 })

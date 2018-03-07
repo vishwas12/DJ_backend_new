@@ -59,8 +59,8 @@ public class Vendor {
 			@JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID") })
 	private List<Role> roles = new ArrayList<>();*/
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-	private VendorVerification userVerification;
+	@OneToOne(mappedBy = "vendor", cascade = CascadeType.ALL)
+	private Verification verification;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vendor")
 	private Set<Profile> profile;
@@ -185,19 +185,11 @@ public class Vendor {
 		isEmailVerified = emailVerified;
 	}
 
-/*	public List<Role> getRoles() {
-		return roles;
+	public Verification getVerification() {
+		return verification;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}*/
-
-	public VendorVerification getUserVerification() {
-		return userVerification;
-	}
-
-	public void setUserVerification(VendorVerification userVerification) {
-		this.userVerification = userVerification;
+	public void setVerification(Verification verification) {
+		this.verification = verification;
 	}
 }

@@ -16,6 +16,8 @@ public class DjConstants {
 	public static final String UNABLE_TO_REGISTER = "UNABLE_TO_REGISTER";
 	public static final String PHONE_OR_EMAIL_PRE_EXISTS = "PHONE_OR_EMAIL_PRE_EXISTS";
 	public static final String BAD_CREDENTIALS = "BAD_CREDENTIALS";
+	public static final String REQUIRED_CATEGORY_OR_SUBCATEGORY = "REQUIRED_CATEGORY_OR_SUBCATEGORY";
+
 
 
 

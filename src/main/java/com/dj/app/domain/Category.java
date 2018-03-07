@@ -3,15 +3,7 @@ package com.dj.app.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.dj.app.utils.EnumUtils;
 
@@ -21,11 +13,11 @@ public class Category {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "category_id")
 	private Integer categoryId;
 	
 	private String categoryName;
-	
-	
+
 	private String description;
 	
 	@Enumerated(EnumType.STRING)
@@ -36,6 +28,9 @@ public class Category {
 	
 	public Category() {
 		this.subCategory = new HashSet<>();
+	}
+	public Category(Integer categoryId) {
+		this.categoryId =categoryId;
 	}
 
 	public Integer getCategoryId() {
