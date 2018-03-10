@@ -1,7 +1,10 @@
 package com.dj.app;
 
+import com.dj.app.security.CustomUserDetailsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.LocaleResolver;
@@ -39,6 +43,12 @@ import java.util.Locale;
 		"com.dj.app.repository"
 })
 public class DjApplication extends WebMvcConfigurerAdapter{
+	
+	@Autowired
+	AuthenticationManagerBuilder builder;
+	
+	@Autowired
+	CustomUserDetailsService userDetailsService;
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(DjApplication.class, args);
@@ -86,5 +96,9 @@ public class DjApplication extends WebMvcConfigurerAdapter{
 		return source;
 	}
 
+	@Autowired
+	public void authenticationManager(AuthenticationManagerBuilder builder) throws Exception {
+		builder.userDetailsService(userDetailsService);
+	}
 
 }

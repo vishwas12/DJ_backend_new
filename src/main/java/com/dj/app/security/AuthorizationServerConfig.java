@@ -27,8 +27,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("web-app")
-				.authorizedGrantTypes("password","refresh-token")
+		clients.inMemory().withClient("web-client")
+				.authorizedGrantTypes("client-credentials","password","refresh-token")
 				.authorities("ROLE_VENDOR")
 				.scopes("read","write","trust")
 				.resourceIds("oauth2-resource")
@@ -40,7 +40,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.authenticationManager(authenticationManager)
-				.allowedTokenEndpointRequestMethods(HttpMethod.GET,HttpMethod.POST,HttpMethod.PUT);
+				.allowedTokenEndpointRequestMethods(HttpMethod.GET,HttpMethod.POST);
 	}
 	
 }
