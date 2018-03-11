@@ -2,7 +2,7 @@ package com.dj.app.dto;
 
 import java.util.Date;
 
-public class UserDto extends GenericResponse{
+public class UserDto{
 	private String userId;
 	private String firstName;
 	private String lastName;

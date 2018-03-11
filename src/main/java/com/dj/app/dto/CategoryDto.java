@@ -1,6 +1,6 @@
 package com.dj.app.dto;
 
-public class CategoryDto {
+public class CategoryDto{
 
 	private Integer categoryId;
 	private String categoryName;

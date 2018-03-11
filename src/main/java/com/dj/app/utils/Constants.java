@@ -1,10 +1,12 @@
 package com.dj.app.utils;
 
-public class DjConstants {
+public class Constants {
 
 	public static final String ROLE_USER = "ROLE_USER";
 	public static final String ERROR = "ERROR";
 	public static final String SUCCESS = "SUCCESS";
+	public static final String EMPTY_STRING = "";
+
 	public static final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
 
 

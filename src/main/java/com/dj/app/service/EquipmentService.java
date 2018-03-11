@@ -6,7 +6,7 @@ import com.dj.app.dto.EquipmentsDto;
 import com.dj.app.exception.CustomException;
 import com.dj.app.repository.EquipmentRepository;
 import static com.dj.app.transformers.CommonTransformer.*;
-import com.dj.app.utils.DjConstants;
+import com.dj.app.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class EquipmentService {
 			equipments = equipmentRepository.findBySubCategories(subCategories)
 					.map(toEquipmentDto).collect(Collectors.toList());
 		}else {
-			throw new CustomException(DjConstants.REQUIRED_CATEGORY_OR_SUBCATEGORY);
+			throw new CustomException(Constants.REQUIRED_CATEGORY_OR_SUBCATEGORY);
 		}
 		return equipments;
 	}

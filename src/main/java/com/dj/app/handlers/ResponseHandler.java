@@ -4,9 +4,8 @@ package com.dj.app.handlers;
 import com.dj.app.exception.ApiError;
 import com.dj.app.exception.CustomException;
 import com.dj.app.exception.ValidationException;
-import com.dj.app.utils.DjConstants;
+import com.dj.app.utils.Constants;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.MethodParameter;
@@ -57,21 +56,8 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
 								  ServerHttpRequest request1, ServerHttpResponse response1) {
 		Locale locale = request.getLocale();
 		int status = response.getStatus();
-		if (body instanceof ApiResponse) {
-			String responseCode = ((ApiResponse) body).getCode();
-			if (null != responseCode) {
-				if(responseCode.startsWith("UNABLE")) {
-					status = HttpStatus.INTERNAL_SERVER_ERROR.value();
-					responseCode = DjConstants.INTERNAL_SERVER_ERROR;
-				}
-
-				String message = resolveLocaleMessage(responseCode, null, locale);
-				((ApiResponse) body).setMessage(message);
-				((ApiResponse) body).setCode(responseCode);
-			}
-			response.setStatus(status);
-		}
-		return body;
+		ApiResponse apiResponse = new ApiResponse(Constants.SUCCESS,Constants.EMPTY_STRING,body);
+		return apiResponse;
 	}
 	public String resolveLocaleMessage(String code,Object [] args,Locale locale) {
 		String message = messageSource.getMessage(code, null, "", locale);
@@ -81,14 +67,14 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
 	@ExceptionHandler(value = ValidationException.class)
 	protected ResponseEntity<Object> handleValidationException(ValidationException e) {
 		ApiError apiError =
-				new ApiError("BAD_REQUEST", DjConstants.ERROR, e.getMessage(), HttpStatus.BAD_REQUEST.value());
+				new ApiError("BAD_REQUEST", Constants.ERROR, e.getMessage(), HttpStatus.BAD_REQUEST.value());
 		return new ResponseEntity<Object>(apiError, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(value = CustomException.class)
 	protected ResponseEntity<Object> handleCustomException(CustomException e) {
 		ApiError apiError =
-				new ApiError("INTERNAL_SERVER_ERROR", DjConstants.ERROR, e.getCode(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+				new ApiError("INTERNAL_SERVER_ERROR", Constants.ERROR, e.getCode(), HttpStatus.INTERNAL_SERVER_ERROR.value());
 		return new ResponseEntity<Object>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
@@ -96,55 +82,55 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
 	public ResponseEntity<Object> handleHttpRequestMethodNotSupportedException(HttpServletRequest request, HttpRequestMethodNotSupportedException e) {
 
 		ApiError apiError =
-				new ApiError("METHOD_NOT_ALLOWED", DjConstants.ERROR, e.getMessage(), HttpStatus.METHOD_NOT_ALLOWED.value());
+				new ApiError("METHOD_NOT_ALLOWED", Constants.ERROR, e.getMessage(), HttpStatus.METHOD_NOT_ALLOWED.value());
 		return new ResponseEntity<Object>(apiError, HttpStatus.METHOD_NOT_ALLOWED);
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException e) {
 		ApiError apiError =
-				new ApiError("404_NOT_FOUND", DjConstants.ERROR, e.getRequestURL() + " : Resource Not Found", HttpStatus.NOT_FOUND.value());
+				new ApiError("404_NOT_FOUND", Constants.ERROR, e.getRequestURL() + " : Resource Not Found", HttpStatus.NOT_FOUND.value());
 		return new ResponseEntity<Object>(apiError, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	public ResponseEntity<Object> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
 		ApiError apiError =
-				new ApiError("MISSING_PARAMETER", DjConstants.ERROR, e.getMessage(), HttpStatus.BAD_REQUEST.value());
+				new ApiError("MISSING_PARAMETER", Constants.ERROR, e.getMessage(), HttpStatus.BAD_REQUEST.value());
 		return new ResponseEntity<Object>(apiError, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(JsonMappingException.class)
 	public ResponseEntity<Object> handleJsonMappingException(JsonMappingException e) {
 		ApiError apiError =
-				new ApiError("INVALID_REQUEST_BODY", DjConstants.ERROR, e.getMessage(),HttpStatus.BAD_REQUEST.value());
+				new ApiError("INVALID_REQUEST_BODY", Constants.ERROR, e.getMessage(),HttpStatus.BAD_REQUEST.value());
 		return new ResponseEntity<Object>(apiError, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
 		ApiError apiError =
-				new ApiError("INVALID_REQUEST_BODY", DjConstants.ERROR, e.getLocalizedMessage(),HttpStatus.BAD_REQUEST.value());
+				new ApiError("INVALID_REQUEST_BODY", Constants.ERROR, e.getLocalizedMessage(),HttpStatus.BAD_REQUEST.value());
 		return new ResponseEntity<Object>(apiError, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
 	public ResponseEntity<Object> HttpClientErrorException(HttpMediaTypeNotSupportedException e) {
 		ApiError apiError =
-				new ApiError("MEDIA_TYPE_NOT_SUPPORTED", DjConstants.ERROR, "supported types : " + e.getSupportedMediaTypes().toString(),HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
+				new ApiError("MEDIA_TYPE_NOT_SUPPORTED", Constants.ERROR, "supported types : " + e.getSupportedMediaTypes().toString(),HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
 		return new ResponseEntity<Object>(apiError, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
 	}
 
 	@ExceptionHandler(AccessDeniedException.class)
 	public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException e) {
 		ApiError apiError =
-				new ApiError("ACCESS_DENIED", DjConstants.ERROR, "Please check your access privileges",HttpStatus.UNAUTHORIZED.value());
+				new ApiError("ACCESS_DENIED", Constants.ERROR, "Please check your access privileges",HttpStatus.UNAUTHORIZED.value());
 		return new ResponseEntity<Object>(apiError, HttpStatus.UNAUTHORIZED);
 	}
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	public ResponseEntity<Object> handleConversionFailedException(MethodArgumentTypeMismatchException e) {
 		ApiError apiError =
-				new ApiError("INVALID_ARGUEMENT", DjConstants.ERROR, e.getName(),HttpStatus.BAD_REQUEST.value());
+				new ApiError("INVALID_ARGUEMENT", Constants.ERROR, e.getName(),HttpStatus.BAD_REQUEST.value());
 		return new ResponseEntity<Object>(apiError, HttpStatus.BAD_REQUEST);
 	}
 
@@ -152,7 +138,7 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleAllExceptions(Exception e) {
 		ApiError apiError =
-				new ApiError("INTERNAL_SERVER_ERROR", DjConstants.ERROR, e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value());
+				new ApiError("INTERNAL_SERVER_ERROR", Constants.ERROR, e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value());
 		return new ResponseEntity<Object>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 

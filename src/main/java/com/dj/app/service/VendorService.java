@@ -12,15 +12,13 @@ import com.dj.app.repository.VendorRepository;
 import com.dj.app.repository.VerificationRepository;
 import com.dj.app.transformers.VendorTransformer;
 import com.dj.app.utils.CommonUtils;
-import com.dj.app.utils.DjConstants;
+import com.dj.app.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
@@ -64,11 +62,11 @@ public class VendorService {
 			apiResponse = VendorTransformer.transformToRegisterResponse(vendor);
 		} catch (Exception e) {
 			LOGGER.error("Unable to register , Email  : {} Phone : {}", registerDto.getEmail(), registerDto.getPhone());
-			String code = DjConstants.UNABLE_TO_REGISTER;
+			String code = Constants.UNABLE_TO_REGISTER;
 			if (e.getClass().isAssignableFrom(DataIntegrityViolationException.class)) {
-				code = DjConstants.PHONE_OR_EMAIL_PRE_EXISTS;
+				code = Constants.PHONE_OR_EMAIL_PRE_EXISTS;
 			}
-			apiResponse = new ApiResponse(DjConstants.ERROR, code);
+			apiResponse = new ApiResponse(Constants.ERROR, code);
 		}
 		return apiResponse;
 
@@ -80,10 +78,7 @@ public class VendorService {
 		try {
 			user = vendorRepository.findByVendorId(id);
 			BeanUtils.copyProperties(user, userDto);
-			userDto.setResponseStatus("SUCCESS");
 		} catch (Exception e) {
-			userDto.setResponseStatus("ERROR");
-			userDto.setResponseCode("UNABLE_TO_FETCH_DETAILS");
 		}
 		return userDto;
 	}

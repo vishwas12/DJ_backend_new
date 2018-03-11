@@ -11,7 +11,7 @@ import com.dj.app.service.CategoryService;
 import com.dj.app.service.EquipmentService;
 import com.dj.app.service.MessagingService;
 import com.dj.app.service.VendorService;
-import com.dj.app.utils.DjConstants;
+import com.dj.app.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +53,10 @@ public class PublicController {
 	}
 
 	@RequestMapping(value = "/equipments", method = RequestMethod.GET)
-	public ResponseEntity<?> fetchEquipments(@RequestParam(value = "categoryId", required = false) Integer categoryId,
+	public ResponseEntity<List<EquipmentsDto>> fetchEquipments(@RequestParam(value = "categoryId", required = false) Integer categoryId,
 											 @RequestParam(value = "subCategoryId", required = false) Integer subCategoryId) {
 		if (null == categoryId && null == subCategoryId) {
-			throw new CustomException(DjConstants.REQUIRED_CATEGORY_OR_SUBCATEGORY);
+			throw new CustomException(Constants.REQUIRED_CATEGORY_OR_SUBCATEGORY);
 		}
 		List<EquipmentsDto> equipmentsDtos = equipmentService.fetchEquipmentsByCategory(categoryId, subCategoryId);
 		return ResponseEntity.ok(equipmentsDtos);
@@ -64,7 +64,7 @@ public class PublicController {
 	}
 
 	@RequestMapping(value = "/categoryList", method = RequestMethod.GET)
-	public ResponseEntity<?> fetchCategoryList() {
+	public ResponseEntity<List<CategoryDto>> fetchCategoryList() {
 		List<CategoryDto> categories = categoryService.fetchCategoryList();
 		return ResponseEntity.ok(categories);
 	}
