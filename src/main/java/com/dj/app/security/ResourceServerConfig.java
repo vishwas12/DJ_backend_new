@@ -9,12 +9,14 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+	
+	private static final String unSecuredURL[] = {"/","/login","/register","/v1/public/**"};
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/","/login**").permitAll()
+			.antMatchers(unSecuredURL).permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
